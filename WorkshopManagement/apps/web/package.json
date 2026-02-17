@@ -1,0 +1,17 @@
+{
+  "name": "supto-web",
+  "private": true,
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "18.x",
+    "react-dom": "18.x",
+    "next": "13.x",
+    "typescript": "4.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  }
+}

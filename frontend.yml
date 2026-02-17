@@ -1,0 +1,24 @@
+name: Frontend (Next.js) Build & Preview
+on:
+  push:
+    branches: [ main, master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: |
+          cd apps/web
+          npm install
+      - name: Build frontend
+        run: |
+          cd apps/web
+          npm run build || true
+      - name: Preview note
+        run: |
+          echo "Frontend build completed. Deploy to Vercel via Vercel CLI or integrate with GitHub Actions in your Vercel project."

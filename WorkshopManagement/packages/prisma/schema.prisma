@@ -1,0 +1,182 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model DeviceRepair {
+  id               String       @id @default(uuid())
+  customerId       String
+  deviceBrand      String
+  deviceModel      String
+  imei             String?
+  serial           String?
+  faultReported    String
+  finalResolution  String?
+  receivedAt       DateTime
+  releasedAt       DateTime?
+  estimatedCost    Decimal      @db.Decimal(10, 2)
+  deposit          Decimal?     @db.Decimal(10, 2)
+  actualCost       Decimal?     @db.Decimal(10, 2)
+  status           String
+  technicianId     String?
+  notes            String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  // relations
+  customer         Customer     @relation(fields: [customerId], references: [id])
+}
+
+model Customer {
+  id            String         @id @default(uuid())
+  name          String
+  phone         String
+  email         String?
+  address       String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  repairs       DeviceRepair[]
+}
+
+model InventoryItem {
+  id                String        @id @default(uuid())
+  sku               String
+  name              String
+  category          String
+  stockQuantity     Int
+  reservedQuantity  Int
+  reorderThreshold  Int
+  preferredSupplier String?
+  costPrice         Float
+  sellPrice         Float?
+  location          String?
+  leadTimeDays      Int?
+  lastUpdated       DateTime      @updatedAt
+  repairs           RepairItem[]
+}
+
+model RepairItem {
+  id                String        @id @default(uuid())
+  repairId          String
+  inventoryItemId   String
+  quantity          Int
+  unitCost          Float
+  totalCost         Float
+  consumedAt        DateTime?
+  repair            DeviceRepair  @relation(fields: [repairId], references: [id], onDelete: Cascade)
+  item              InventoryItem @relation(fields: [inventoryItemId], references: [id])
+}
+
+model TimeLog {
+  id         String   @id @default(uuid())
+  repairId   String
+  technicianId String?
+  start      DateTime
+  end        DateTime?
+  duration   Int?
+  notes      String?
+}
+
+model Receipt {
+  id            String  @id @default(uuid())
+  repairId      String
+  customerId    String
+  date          DateTime @default(now())
+  lineItems     Json
+  taxRate       Float
+  subtotal      Float
+  tax           Float
+  depositApplied Float
+  total         Float
+  balanceDue    Float
+  warrantyTerms String?
+  issuedBy      String?
+  signature     String?
+}
+
+model AuditLog {
+  id        String @id @default(uuid())
+  entity    String
+  entityId  String
+  action    String
+  changedBy String
+  timestamp DateTime @default(now())
+  details   String?
+}
+
+model Technician {
+  id    String @id @default(uuid())
+  name  String
+  phone String?
+  email String?
+}
+
+model Supplier {
+  id            String @id @default(uuid())
+  name          String
+  contactInfo   String?
+  leadTimeDays  Int?
+  email         String?
+}
+
+model InsuranceClaim {
+  id                 String  @id @default(uuid())
+  repairId           String
+  insurerName        String
+  claimNumber        String
+  claimStatus        String
+  notRepairableReason String?
+  salvageValue       Float?
+  payoutAmount       Float?
+  attachments        String[]?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+// Runtime-editable RBAC models (Phase 1 MVP: store roles/permissions in DB)
+model User {
+  id       String   @id @default(uuid())
+  email    String?  @unique
+  name     String?
+  password String?
+  roles    UserRole[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  name        String           @unique()
+  users       UserRole[]
+  permissions RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  name        String           @unique()
+  description String?
+  roles       RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model UserRole {
+  id     String @id @default(uuid())
+  userId String
+  roleId String
+  user   User   @relation(fields: [userId], references: [id])
+  role   Role   @relation(fields: [roleId], references: [id])
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+}

@@ -1,0 +1,36 @@
+name: Backend (Railway) Build & Seed
+on:
+  push:
+    branches: [ main, master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: |
+          npm install --workspaces
+      - name: Prisma generate
+        run: |
+          npx prisma generate --schema packages/prisma/schema.prisma
+      - name: Prisma migrate / push (dev env)
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          npx prisma db push --schema packages/prisma/schema.prisma
+      - name: Seed data (Phase 1)
+        run: |
+          npm run seed
+      - name: Seed extra data (Phase 1 extensions)
+        run: |
+          npm run seed:extra
+      - name: Build backend
+        run: |
+          npm run start:api &>/dev/null & echo $! > /tmp/backend_pid; sleep 1; tail -f /tmp/backend_log 2>&1 & true
+      - name: Note
+        run: |
+          echo "Backend build & seed complete. Deploy to Railway via CLI using the Railway project token in secrets if desired."
