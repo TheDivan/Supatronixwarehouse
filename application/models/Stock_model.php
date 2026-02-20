@@ -63,7 +63,24 @@ class Stock_model extends CI_Model {
     public function get_all($office_id = null, $category = null) {
         if ($office_id) $this->db->where('office_id', $office_id);
         if ($category) $this->db->where('part_category', $category);
-        return $this->db->order_by('created_datetime', 'DESC')->get($this->table)->result_array();
+        $rows = $this->db->order_by('created_datetime', 'DESC')->get($this->table)->result_array();
+        // If requesting for a specific office and no rows exist, seed canonical defaults for that office
+        if ($office_id && empty($rows)) {
+            // attempt to use Category_model canonical list if available
+            if (class_exists('Category_model')) {
+                $CI =& get_instance();
+                $CI->load->model('Category_model');
+                $cats = array_map(function($r){ return $r['name']; }, $CI->Category_model->get_all());
+                $this->seed_defaults($office_id, $cats);
+            } else {
+                $this->seed_defaults($office_id, null);
+            }
+            // re-query after seeding
+            $this->db->where('office_id', $office_id);
+            if ($category) $this->db->where('part_category', $category);
+            $rows = $this->db->order_by('created_datetime', 'DESC')->get($this->table)->result_array();
+        }
+        return $rows;
     }
 
     public function get($id) {
@@ -71,6 +88,33 @@ class Stock_model extends CI_Model {
     }
 
     public function insert($data) {
+        // Normalize inputs
+        $office_id = isset($data['office_id']) ? (int)$data['office_id'] : null;
+        $category = isset($data['part_category']) ? $data['part_category'] : null;
+        $part_name = isset($data['part_name']) ? $data['part_name'] : null;
+        $quantity = isset($data['quantity']) ? (int)$data['quantity'] : 0;
+
+        // If a matching item exists for the same office, category and part_name, merge quantities
+        if ($office_id && $category && $part_name) {
+            $existing = $this->db->where('office_id', $office_id)
+                                  ->where('part_category', $category)
+                                  ->where('part_name', $part_name)
+                                  ->get($this->table)->row_array();
+            if ($existing) {
+                // Update quantity and optional fields
+                $upd = array();
+                if ($quantity !== 0) {
+                    $this->db->set('quantity', 'quantity + ' . $quantity, FALSE);
+                }
+                if (isset($data['cost'])) $upd['cost'] = $data['cost'];
+                if (isset($data['supplier'])) $upd['supplier'] = $data['supplier'];
+                if (isset($data['notes'])) $upd['notes'] = $data['notes'];
+                $upd['updated_datetime'] = date('Y-m-d H:i:s');
+                if (!empty($upd)) $this->db->where('id', $existing['id'])->update($this->table, $upd);
+                return (int)$existing['id'];
+            }
+        }
+
         $data['created_datetime'] = date('Y-m-d H:i:s');
         $data['updated_datetime'] = $data['created_datetime'];
         // If the DB schema doesn't have supplier_id yet, remove it to avoid SQL errors

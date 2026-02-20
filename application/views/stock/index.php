@@ -36,15 +36,6 @@
             </select>
         </div>
     </div>
-    <!-- Categories (canonical only) -->
-    <div class="mb-3">
-        <?php if (!empty($categories) && is_array($categories)): ?>
-            <?php foreach ($categories as $c): ?>
-                <a class="btn btn-sm btn-outline-secondary mr-1 mb-1" href="<?php echo site_url('stock?category=' . urlencode($c['name'])); ?>"><?php echo htmlspecialchars($c['name']); ?></a>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
-
     <table id="stock-table" class="table table-striped">
         <thead>
             <tr>

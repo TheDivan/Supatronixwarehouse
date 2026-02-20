@@ -1,0 +1,466 @@
+<!doctype html>
+<html>
+<head>
+<title>Supatronix Workshop | Supatronix Workshop</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="shortcut icon" href="http://localhost/assets/favicon.ico" type="image/x-icon">
+<link rel="icon" href="http://localhost/assets/favicon.ico" type="image/x-icon">
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
+<link href="http://localhost/assets/styles/styles.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/bootstrap.min.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/font-awesome.min.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/customstyles.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/parsley.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/magnific-popup.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/dataTables.bootstrap.css" rel="stylesheet"/>
+<link href="http://localhost/assets/styles/bootstrap-datepicker.css" rel="stylesheet">
+<link href="http://localhost/assets/styles/chosen.css" rel="stylesheet">
+
+<!--Scripts--> 
+<script type="text/javascript" src="//code.jquery.com/jquery-1.12.0.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/jquery-migrate-1.3.0.min.js"></script> 
+</head>
+<body>
+<!--SuperDiv [Start]-->
+<div id="superdiv"> 
+  <!--Header [Start]-->
+  <header id="header">
+    <div class="container">
+      <div class="row"> 
+        <!--Logo-->
+        <aside class="logo pull-left"><img src="http://localhost/assets/images/supalogo.png" alt="Supatronix Workshop" height="85" ></aside>
+        <div class="usrOpt no-pad col-md-6 pull-right">
+                  <!-- Status Bar [Start] -->
+          <div class="statusBar"> <span class="pull-left">Welcome Divan</span>
+            <div class="dropdown pull-left"> <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="pad-5 btn-useropt cursor"> <i class="fa fa-angle-down"></i> </a> |
+              <ul class="dropdown-menu useroptMenu" aria-labelledby="dLabel">
+                <li><a data-toggle="modal" data-target="#password-popup" href="#password-popup" class="open-popup-link">Change Password</a></li>
+              </ul>
+            </div>
+            <a href="http://localhost/logout" class="pad-5 f12"><i class="fa fa-sign-out"></i> Logout</a> </div>
+          <!-- Status Bar [END] 
+          <a href="http://localhost/dashboard" class="btn btn-default active pull-right">Dashboard</a>-->  
+                    <!-- office Drop Down-->
+          <div class="dropdown pull-right"> <a id="office" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-dropDown"> All Location <i class="fa fa-angle-down"></i> </a>
+                      </div>
+                          </div>
+      </div>
+      <!--/row--> 
+    </div>
+    <!--/container--> 
+    <!-- Main Menu [Start] -->
+    <nav id="mainMenu">
+      <div class="container">
+        <div class="row">
+          <ul class="topMenu">
+            <li > <a href="http://localhost/dashboard"><i class="fa fa-dashboard"></i><br>
+              Dashboard</a> </li>
+            
+            <li > <a href="http://localhost/job"><i class="fa fa-book"></i><br>
+              Bookings</a> </li>
+            
+            <li > <a href="http://localhost/customer"><i class="fa fa-users"></i><br>
+              Customers</a> </li>
+            
+            <li > <a href="http://localhost/employee"><i class="fa fa-user-secret"></i><br>
+              Employees</a> </li>
+            
+            <li > <a href="http://localhost/brand"><i class="fa fa-cog"></i><br>
+              Brands</a> </li>
+
+            <li > <a href="http://localhost/model"><i class="fa fa-cogs"></i><br>
+              Brand Models</a> </li>
+
+            <li > <a href="http://localhost/email"><i class="fa fa-envelope"></i><br>
+              Email Templates</a> </li>
+            
+            <li class="active"> <a href="http://localhost/stock"><i class="fa fa-archive"></i><br>
+              Stock</a> </li>
+
+                        <li > <a href="http://localhost/suppliers"><i class="fa fa-truck"></i><br>
+              Suppliers</a> </li>
+
+            <li > <a href="http://localhost/api_tokens"><i class="fa fa-key"></i><br>
+              API Tokens</a> </li>
+                      </ul>
+        </div>
+        <!--/row--> 
+      </div>
+      <!--/container--> 
+    </nav>
+    <!-- Main Menu [END] --> 
+  </header>
+  <!--Header [END]--> 
+  <!--Content [Start]-->
+   
+   <div class="container">
+    <h2 class="section-header">Stock Items</h2>
+    <div class="mb-2">
+        <a href="http://localhost/stock/add" class="btn btn-primary">Add Stock Item</a>
+                    <a href="http://localhost/stock/seed_defaults" class="btn btn-warning">Seed Default Parts</a>
+            </div>
+        <div class="row mb-2">
+        <div class="col-md-4"><input id="stock-search" class="form-control" placeholder="Search stock..." /></div>
+        <div class="col-md-3">
+            <select id="office-filter" class="form-control">
+                <option value="">All offices</option>
+                <option value="1" data-name="Walvis Bay">Walvis Bay (WB) (20)</option>            </select>
+        </div>
+    </div>
+    <table id="stock-table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Office</th>
+                <th>Part</th>
+                <th>Qty</th>
+                <th>Cost</th>
+                <th>Supplier</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+                
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Screen%2FLCD">Screen/LCD</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>E2E Test Part</td>
+                <td>3</td>
+                <td>5.50</td>
+                <td></td>
+                <td>E2E test add2</td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Touch">Touch</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Touch</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Button">Button</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Button</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Sim+Tray">Sim Tray</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Sim Tray</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Speaker">Speaker</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Speaker</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Charging+Unit%2FBlock">Charging Unit/Block</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Charging Unit/Block</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Software">Software</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Software</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Back+Plate">Back Plate</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Back Plate</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Camera+Glass">Camera Glass</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Camera Glass</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Screen%2FLCD">Screen/LCD</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Screen/LCD</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Software">Software</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td></td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Software">Software</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Screen &amp; Tuuch</td>
+                <td>3</td>
+                <td>4500.00</td>
+                <td><a href="http://localhost/suppliers/edit/1">R&amp;R Importers</a></td>
+                <td>screen and touch original </td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Speaker">Speaker</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Speaker - internal</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Charging+Unit%2FBlock">Charging Unit/Block</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Charging port / unit</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Button">Button</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Home/Power/Volume button</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Software">Software</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Motherboard</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Battery">Battery</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Battery</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Sim+Tray">Sim Tray</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>SIM tray / holder</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Touch">Touch</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Phone touch / digitizer</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                    <tr data-office="1">
+                <td>
+                                        <a href="http://localhost/stock?category=Screen%2FLCD">Screen/LCD</a>
+                </td>
+                <td>Walvis Bay</td>
+                <td>Screen - generic</td>
+                <td>0</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                </tbody>
+    </table>
+</div>
+                <div id="savedModal" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Stock Saved</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Saved stock item: E2E Test Part (ID: 23)</p>
+                            <p>Please click OK to continue.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="savedModalOk" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+            document.addEventListener('DOMContentLoaded', function(){
+                    try {
+                            if (typeof jQuery !== 'undefined' && jQuery().modal) {
+                                    jQuery('#savedModal').modal('show');
+                            } else {
+                                    // fallback to simple alert if Bootstrap modal not available
+                                    var ok = confirm('Saved stock item: ' + ("E2E Test Part") + '\nOK to continue');
+                            }
+                    } catch(e) { console.error(e); }
+            });
+            </script>
+    <script>
+// Initialize DataTables for stock table
+document.addEventListener('DOMContentLoaded', function(){
+    if (typeof jQuery === 'undefined' || !jQuery().DataTable) return;
+    var table = jQuery('#stock-table').DataTable({
+        pageLength: 25
+    });
+    // populate office filter
+    var officeSel = document.getElementById('office-filter');
+    if (officeSel) {
+        // Use the option's data-name attribute (friendly office name) for DataTables search
+        officeSel.addEventListener('change', function(){
+            var val = this.value;
+            if (val === '') {
+                table.column(2).search('').draw();
+            } else {
+                var name = this.options[this.selectedIndex].getAttribute('data-name') || this.options[this.selectedIndex].text;
+                table.column(2).search('^' + jQuery.fn.dataTable.util.escapeRegex(name) + '$', true, false).draw();
+            }
+        });
+    }
+    // wire up free-text search to DataTables search
+    var search = document.getElementById('stock-search');
+    if (search) search.addEventListener('input', function(){ table.search(this.value).draw(); });
+});
+</script>
+<script>
+// Simple client-side search and office filter for the stock table
+document.addEventListener('DOMContentLoaded', function(){
+    var search = document.getElementById('stock-search');
+    var office = document.getElementById('office-filter');
+    var tbody = document.querySelector('table.table tbody');
+    function applyFilters(){
+        var q = (search && search.value || '').toLowerCase();
+        var o = (office && office.value) || '';
+        Array.prototype.forEach.call(tbody.querySelectorAll('tr'), function(row){
+            var text = row.innerText.toLowerCase();
+            var matchesQ = q === '' || text.indexOf(q) !== -1;
+            var matchesO = o === '' || row.getAttribute('data-office') === o;
+            row.style.display = (matchesQ && matchesO) ? '' : 'none';
+        });
+    }
+    if (search) search.addEventListener('input', applyFilters);
+    if (office) office.addEventListener('change', applyFilters);
+});
+</script>
+  <!--Content [END]--> 
+</div>
+<!--SuperDiv [END]-->
+<!-- Modal -->
+<div class="modal fade" id="password-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+		<form action="http://localhost/employee/change_password" class="col-md-10 fn mauto" data-parsley-validate="" method="post" accept-charset="utf-8">
+		<input type="hidden" name="return_url" value="http://localhost/stock" style="display:none;" />
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+      </div>
+      <div class="modal-body">
+		<div class="popGrid">
+			<div class="form-group">
+				<input name="password" type="password" placeholder="New Passsword" class="form-control" id="password" value="" required minlength="3" maxlength="32">
+			</div>
+			<div class="form-group">
+				<input name="re-password" type="password" placeholder="Confirm Password" class="form-control" required minlength="3" maxlength="32" data-parsley-equalto="#password">
+			</div>			
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Change Password</button>
+      </div>
+	  </form> 
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="http://localhost/assets/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/parsley.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/jquery.knob.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/jquery.magnific-popup.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/bootstrap-datepicker.min.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/chosen.jquery.js"></script> 
+<script type="text/javascript" src="http://localhost/assets/js/settings.js"></script>
+</body>
+</html>

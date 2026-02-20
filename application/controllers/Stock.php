@@ -31,8 +31,6 @@ class Stock extends FSD_Controller {
         $data['office_names'] = array(1 => 'Walvis Bay', 2 => 'Swakopmund');
         // Pass any post-save flashdata to the view so it can show a confirmation modal
         $data['saved'] = $this->session->flashdata('saved');
-        // provide canonical categories to the view for categories-only listing
-        $data['categories'] = $this->Category_model->get_all();
         $this->load->view('master_template', array('content' => $this->load->view('stock/index', $data, TRUE)));
     }
 
@@ -75,7 +73,7 @@ class Stock extends FSD_Controller {
             }
             $record = array(
                 'office_id' => $office_id,
-                'part_category' => $this->Category_model->map_to_canonical($post['part_category'] ?? ''),
+                'part_category' => $post['part_category'] ?? null,
                 'part_name' => $post['part_name'] ?? null,
                 'quantity' => isset($post['quantity']) ? (int)$post['quantity'] : 0,
                 'cost' => isset($post['cost']) ? (float)$post['cost'] : null,
