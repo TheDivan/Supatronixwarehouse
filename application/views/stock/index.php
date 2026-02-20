@@ -36,10 +36,18 @@
             </select>
         </div>
     </div>
+    <!-- Categories (canonical only) -->
+    <div class="mb-3">
+        <?php if (!empty($categories) && is_array($categories)): ?>
+            <?php foreach ($categories as $c): ?>
+                <a class="btn btn-sm btn-outline-secondary mr-1 mb-1" href="<?php echo site_url('stock?category=' . urlencode($c['name'])); ?>"><?php echo htmlspecialchars($c['name']); ?></a>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
     <table id="stock-table" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Category</th>
                 <th>Office</th>
                 <th>Part</th>
@@ -61,7 +69,6 @@
         
         <?php foreach ($stocks as $s): ?>
             <tr data-office="<?php echo $s['office_id'] ?? 0; ?>">
-                <td><?php echo $s['id']; ?></td>
                 <td>
                     <?php $cat = htmlspecialchars((string)($s['part_category'] ?? '')); ?>
                     <a href="<?php echo site_url('stock?category=' . urlencode($s['part_category'])); ?>"><?php echo $cat; ?></a>

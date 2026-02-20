@@ -98,4 +98,31 @@ class Category_model extends CI_Model {
     public function get($id) {
         return $this->db->where('id',$id)->get($this->table)->row_array();
     }
+
+    /**
+     * Map an arbitrary category name to a canonical category name present in
+     * `stock_categories`. Uses normalized matching and Levenshtein distance
+     * with a small threshold. Returns a canonical name (string).
+     */
+    public function map_to_canonical($name) {
+        $name = trim((string)$name);
+        if ($name === '') return 'Software';
+        // try exact case-insensitive match
+        $row = $this->db->where('LOWER(name)=', strtolower($name))->get($this->table)->row_array();
+        if ($row) return $row['name'];
+        // normalize
+        $norm = preg_replace('/[^a-z0-9]+/', '', strtolower($name));
+        if ($norm === '') return 'Software';
+        $rows = $this->get_all();
+        $best = null; $bestDist = PHP_INT_MAX;
+        foreach ($rows as $r) {
+            $rnorm = preg_replace('/[^a-z0-9]+/', '', strtolower($r['name']));
+            if ($rnorm === $norm) return $r['name'];
+            $d = levenshtein($norm, $rnorm);
+            if ($d < $bestDist) { $bestDist = $d; $best = $r['name']; }
+        }
+        $threshold = max(2, (int)floor(max(strlen($norm),1) * 0.15));
+        if ($bestDist <= $threshold) return $best;
+        return 'Software';
+    }
 }
