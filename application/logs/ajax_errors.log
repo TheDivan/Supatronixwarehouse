@@ -1,0 +1,234 @@
+[2026-02-18 14:06:29] Uncaught ErrorException: str_replace(): Passing null to parameter #3 ($subject) of type array|string is deprecated in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\Output.php:457
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(8192, 'str_replace(): ...', 'C:\\Users\\MCWalv...', 457)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\Output.php(457): str_replace(Array, Array, NULL)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(551): CI_Output->_display()
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#4 {main}
+[2026-02-18 14:06:33] Uncaught ErrorException: setcookie(): Passing null to parameter #2 ($value) of type string is deprecated in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php:142
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(8192, 'setcookie(): Pa...', 'C:\\Users\\MCWalv...', 142)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php(142): setcookie('gsm_session', NULL, 1, '/', '', false, true)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\drivers\Session_files_driver.php(326): CI_Session_driver->_cookie_destroy()
+#3 [internal function]: CI_Session_files_driver->destroy('555mvd8ivafojoc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session.php(702): session_destroy()
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Employee.php(130): CI_Session->sess_destroy()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): Employee->logout()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-18 14:06:35] Uncaught ErrorException: setcookie(): Passing null to parameter #2 ($value) of type string is deprecated in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php:142
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(8192, 'setcookie(): Pa...', 'C:\\Users\\MCWalv...', 142)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php(142): setcookie('gsm_session', NULL, 1, '/', '', false, true)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\drivers\Session_files_driver.php(326): CI_Session_driver->_cookie_destroy()
+#3 [internal function]: CI_Session_files_driver->destroy('555mvd8ivafojoc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session.php(702): session_destroy()
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Employee.php(130): CI_Session->sess_destroy()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): Employee->logout()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-18 14:06:38] Uncaught ErrorException: setcookie(): Passing null to parameter #2 ($value) of type string is deprecated in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php:142
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(8192, 'setcookie(): Pa...', 'C:\\Users\\MCWalv...', 142)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php(142): setcookie('gsm_session', NULL, 1, '/', '', false, true)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\drivers\Session_files_driver.php(326): CI_Session_driver->_cookie_destroy()
+#3 [internal function]: CI_Session_files_driver->destroy('555mvd8ivafojoc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session.php(702): session_destroy()
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Employee.php(130): CI_Session->sess_destroy()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): Employee->logout()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-18 14:07:53] Uncaught ErrorException: setcookie(): Passing null to parameter #2 ($value) of type string is deprecated in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php:142
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(8192, 'setcookie(): Pa...', 'C:\\Users\\MCWalv...', 142)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php(142): setcookie('gsm_session', NULL, 1, '/', '', false, true)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\drivers\Session_files_driver.php(326): CI_Session_driver->_cookie_destroy()
+#3 [internal function]: CI_Session_files_driver->destroy('555mvd8ivafojoc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session.php(702): session_destroy()
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Employee.php(130): CI_Session->sess_destroy()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): Employee->logout()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-18 14:07:54] Uncaught ErrorException: setcookie(): Passing null to parameter #2 ($value) of type string is deprecated in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php:142
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(8192, 'setcookie(): Pa...', 'C:\\Users\\MCWalv...', 142)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session_driver.php(142): setcookie('gsm_session', NULL, 1, '/', '', false, true)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\drivers\Session_files_driver.php(326): CI_Session_driver->_cookie_destroy()
+#3 [internal function]: CI_Session_files_driver->destroy('555mvd8ivafojoc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Session\Session.php(702): session_destroy()
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Employee.php(130): CI_Session->sess_destroy()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): Employee->logout()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-18 14:44:49] Uncaught ErrorException: mail(): Failed to connect to mailserver at &quot;localhost&quot; port 25, verify your &quot;SMTP&quot; and &quot;smtp_port&quot; setting in php.ini or use ini_set() in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Email.php:1902
+Stack trace:
+#0 [internal function]: FSD_Controller->{closure}(2, 'mail(): Failed ...', 'C:\\Users\\MCWalv...', 1902)
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Email.php(1902): mail('johntest@yahoo....', '=?UTF-8?Q?Thank...', 'This is a multi...', 'Date: Wed, 18 F...', '-f supatronix@i...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Email.php(1831): CI_Email->_send_with_mail()
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\libraries\Email.php(1721): CI_Email->_spool_email()
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\libraries\Fsd.php(49): CI_Email->send()
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Job.php(171): Fsd->sent_email('supatronix@iway...', 'Supatronix Ware...', 'johntest@yahoo....', 'Thank you for v...', 'Dear John Test,...')
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): Job->add()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(315): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-19 14:52:30] Uncaught mysqli_sql_exception: Duplicate entry 'Divan' for key 'USERNAME_UNIQUE' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('UPDATE `employe...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('UPDATE `employe...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('UPDATE `employe...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1848): CI_DB_driver->query('UPDATE `employe...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Employee_model.php(104): CI_DB_query_builder->update('employees', Array, Array)
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Employee.php(235): Employee_model->update('1', Array)
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(34): Employee->ajax_update()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('ajax_update', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-19 15:10:48] Uncaught mysqli_sql_exception: Table 'bookingsoftware.stock' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Stock_model.php(13): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(14): Stock_model->get_all(NULL)
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(34): Stock->index()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-19 15:11:56] Uncaught mysqli_sql_exception: Table 'bookingsoftware.stock' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Stock_model.php(13): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(14): Stock_model->get_all(NULL)
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(34): Stock->index()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-19 15:12:26] Uncaught mysqli_sql_exception: Table 'bookingsoftware.suppliers' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Supplier_model.php(11): CI_DB_query_builder->get('suppliers')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Suppliers.php(11): Supplier_model->get_all(NULL)
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(34): Suppliers->index()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-19 15:38:23] Uncaught mysqli_sql_exception: Table 'bookingsoftware.stock' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Stock_model.php(13): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(14): Stock_model->get_all('1')
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->index()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-19 15:39:14] Uncaught mysqli_sql_exception: Table 'bookingsoftware.stock' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Stock_model.php(13): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(14): Stock_model->get_all('1')
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->index()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-20 07:39:41] Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\views\master_template.php:49
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\Loader.php(969): include()
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\Loader.php(496): CI_Loader->_ci_load(Array)
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(15): CI_Loader->view('master_template', Array)
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->index()
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#6 {main}
+[2026-02-20 07:42:23] Uncaught mysqli_sql_exception: Table 'bookingsoftware.api_tokens' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Api_tokens.php(18): CI_DB_query_builder->get('api_tokens')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Api_tokens->index()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-20 07:42:26] Uncaught mysqli_sql_exception: Table 'bookingsoftware.suppliers' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT *\nFROM `...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT *\nFROM `...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT *\nFROM `...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT *\nFROM `...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Supplier_model.php(11): CI_DB_query_builder->get('suppliers')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Suppliers.php(11): Supplier_model->get_all('1')
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Suppliers->index()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('index', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-20 08:18:55] Uncaught mysqli_sql_exception: Table 'bookingsoftware.stock_movements' doesn't exist in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('INSERT INTO `st...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('INSERT INTO `st...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('INSERT INTO `st...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1670): CI_DB_driver->query('INSERT INTO `st...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Stock_movement_model.php(18): CI_DB_query_builder->insert('stock_movements', Array)
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(46): Stock_movement_model->log(9, '1', 3, 'Initial stock', '1')
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->add()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('add', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-20 08:57:46] Uncaught mysqli_sql_exception: Unknown column 'supplier_id' in 'field list' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('INSERT INTO `st...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('INSERT INTO `st...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('INSERT INTO `st...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1670): CI_DB_driver->query('INSERT INTO `st...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\models\Stock_model.php(71): CI_DB_query_builder->insert('stock', Array)
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(76): Stock_model->insert(Array)
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->add()
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('add', Array)
+#8 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#9 {main}
+[2026-02-20 11:15:40] Uncaught mysqli_sql_exception: Unknown column 'distinct' in 'field list' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT `distinc...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT `distinc...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT `distinc...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT `distinc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(162): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->category_items()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('category_items', Array)
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-20 11:18:26] Uncaught mysqli_sql_exception: Unknown column 'distinct' in 'field list' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT `distinc...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT `distinc...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT `distinc...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT `distinc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(162): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->category_items()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('category_items', Array)
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-20 11:29:47] Uncaught mysqli_sql_exception: Unknown column 'distinct' in 'field list' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT `distinc...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT `distinc...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT `distinc...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT `distinc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(162): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->category_items()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('category_items', Array)
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#8 {main}

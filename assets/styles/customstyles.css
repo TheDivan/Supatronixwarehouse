@@ -1,0 +1,6 @@
+@charset "utf-8";
+/* All custom style will be written here */
+
+/* Make section headers and table headers lighter for background images */
+h2, .section-header { color: #f5f5f5; }
+table.table thead th { color: #f5f5f5; }
