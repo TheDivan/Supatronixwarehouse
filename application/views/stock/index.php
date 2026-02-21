@@ -62,11 +62,11 @@
             <div id="cat-<?php echo md5($category); ?>" class="collapse show">
                 <table class="table table-striped mb-0">
                     <thead>
-                        <tr><th>Item Name</th><th>Device Model</th><th>Supplier</th><th>Store</th><th>Qty</th><th>Unit Price</th><th>Date Added</th></tr>
+                        <tr><th>Item Name</th><th>Device Model</th><th>Supplier</th><th>Store</th><th>Qty</th><th>Unit Price</th><th>Date Added</th><?php if (!empty($this->session->userdata('is_admin'))): ?><th>Actions</th><?php endif; ?></tr>
                     </thead>
                     <tbody>
                     <?php foreach ($g['rows'] as $s): ?>
-                        <tr data-office="<?php echo $s['office_id'] ?? 0; ?>" data-supplier="<?php echo $s['supplier_id'] ?? ''; ?>">
+                        <tr data-id="<?php echo (int)($s['id'] ?? 0); ?>" data-office="<?php echo $s['office_id'] ?? 0; ?>" data-supplier="<?php echo $s['supplier_id'] ?? ''; ?>">
                             <td><?php echo htmlspecialchars($s['part_name'] ?? ''); ?></td>
                             <td><?php echo htmlspecialchars($s['device_model'] ?? ''); ?></td>
                             <td><?php echo !empty($s['supplier'])?htmlspecialchars($s['supplier']):''; ?></td>
@@ -74,6 +74,11 @@
                             <td><?php $q=(int)($s['quantity']??0); if ($q < 3) echo '<span class="badge badge-danger">'.$q.'</span>'; else echo $q; ?></td>
                             <td><?php echo isset($s['cost']) ? 'N$'.number_format($s['cost'],2) : ''; ?></td>
                             <td><?php echo htmlspecialchars($s['created_datetime'] ?? ''); ?></td>
+                            <?php if (!empty($this->session->userdata('is_admin'))): ?>
+                                <td>
+                                    <a class="btn btn-xs btn-danger stock-delete" href="<?php echo site_url('stock/delete/'.(int)($s['id'] ?? 0)); ?>">Delete</a>
+                                </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -82,7 +87,7 @@
         </div>
     <?php endforeach; ?>
 </div>
-    <?php if (!empty($saved)): ?>
+        <?php if (!empty($saved)): ?>
             <div id="savedModal" class="modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -93,7 +98,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Saved stock item: <?php echo htmlspecialchars($saved['part_name'] ?? ''); ?> (ID: <?php echo (int)($saved['id'] ?? 0); ?>)</p>
+                    <p>Saved stock item: <?php echo htmlspecialchars($saved['part_name'] ?? ''); ?> (ID: <?php echo (int)($saved['id'] ?? 0); ?>)</p>
                             <p>Please click OK to continue.</p>
                         </div>
                         <div class="modal-footer">
@@ -104,14 +109,20 @@
             </div>
             <script>
             document.addEventListener('DOMContentLoaded', function(){
-                    try {
-                            if (typeof jQuery !== 'undefined' && jQuery().modal) {
-                                    jQuery('#savedModal').modal('show');
-                            } else {
-                                    // fallback to simple alert if Bootstrap modal not available
-                                    var ok = confirm('Saved stock item: ' + (<?php echo json_encode($saved['part_name'] ?? ''); ?>) + '\nOK to continue');
-                            }
-                    } catch(e) { console.error(e); }
+                try {
+                    var savedId = <?php echo (int)($saved['id'] ?? 0); ?>;
+                    var shownKey = 'saved_shown_' + savedId;
+                    // Do not re-show if already shown for this saved id
+                    if (savedId && localStorage.getItem(shownKey)) return;
+                    if (typeof jQuery !== 'undefined' && jQuery().modal) {
+                        jQuery('#savedModal').modal('show');
+                        jQuery('#savedModalOk').on('click', function(){ try { localStorage.setItem(shownKey, '1'); } catch(e){} });
+                    } else {
+                        // fallback to simple alert if Bootstrap modal not available
+                        var ok = confirm('Saved stock item: ' + (<?php echo json_encode($saved['part_name'] ?? ''); ?>) + '\nOK to continue');
+                        try { if (savedId) localStorage.setItem(shownKey, '1'); } catch(e){}
+                    }
+                } catch(e) { console.error(e); }
             });
             </script>
     <?php endif; ?>
@@ -147,6 +158,16 @@ document.addEventListener('DOMContentLoaded', function(){
             window.location.search = params.toString();
         });
     }
+    // confirmation for admin delete buttons
+    Array.prototype.forEach.call(document.querySelectorAll('.stock-delete'), function(el){
+        el.addEventListener('click', function(e){
+            if (!confirm('Delete this stock item? This cannot be undone.')) {
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        });
+    });
     // wire up free-text search to DataTables search
     var search = document.getElementById('stock-search');
     if (search) search.addEventListener('input', function(){ table.search(this.value).draw(); });
