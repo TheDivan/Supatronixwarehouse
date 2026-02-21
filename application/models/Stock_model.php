@@ -81,9 +81,10 @@ class Stock_model extends CI_Model {
      * Get all stock items. If $office_id is provided, restrict to that office.
      * If $category is provided, restrict to that part_category.
      */
-    public function get_all($office_id = null, $category = null) {
+    public function get_all($office_id = null, $category = null, $supplier_id = null) {
         if ($office_id) $this->db->where('office_id', $office_id);
         if ($category) $this->db->where('part_category', $category);
+        if (!empty($supplier_id)) $this->db->where('supplier_id', (int)$supplier_id);
         $rows = $this->db->order_by('created_datetime', 'DESC')->get($this->table)->result_array();
         // If requesting for a specific office and no rows exist, seed canonical defaults for that office
         if ($office_id && empty($rows)) {

@@ -27,7 +27,9 @@ class Stock extends FSD_Controller {
         } else {
             $office_filter = (int)$office_filter;
         }
-        $stocks = $this->Stock_model->get_all($office_filter, $category);
+        // supplier filter
+        $supplier_filter = $this->input->get('supplier_id') ?: null;
+        $stocks = $this->Stock_model->get_all($office_filter, $category, $supplier_filter);
         // load suppliers to map names -> ids
         $suppliers = $this->Supplier_model->get_all();
         $smap = array();
@@ -42,6 +44,7 @@ class Stock extends FSD_Controller {
         $data['stocks'] = $stocks;
         $data['active_category'] = $category;
         $data['active_office'] = $office_filter;
+        $data['active_supplier'] = $supplier_filter;
         // use store_locations from store_locations table
         $locations = $this->Store_location_model->get_all();
         $locmap = array();

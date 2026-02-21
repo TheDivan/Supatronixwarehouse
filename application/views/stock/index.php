@@ -32,8 +32,10 @@
         <div class="col-md-3">
             <select id="supplier-filter" class="form-control">
                 <option value="">All suppliers</option>
-                <?php if (!empty($suppliers) && is_array($suppliers)): foreach ($suppliers as $sp): ?>
-                    <option value="<?php echo (int)$sp['id']; ?>"><?php echo htmlspecialchars($sp['name']); ?></option>
+                <?php if (!empty($suppliers) && is_array($suppliers)): foreach ($suppliers as $sp):
+                    $ssel = (!empty($active_supplier) && (int)$active_supplier === (int)$sp['id']) ? ' selected' : '';
+                ?>
+                    <option value="<?php echo (int)$sp['id']; ?>"<?php echo $ssel; ?>><?php echo htmlspecialchars($sp['name']); ?></option>
                 <?php endforeach; endif; ?>
             </select>
         </div>
@@ -129,6 +131,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 params.delete('office_id');
             } else {
                 params.set('office_id', this.value);
+            }
+            window.location.search = params.toString();
+        });
+    }
+    var supplierSel = document.getElementById('supplier-filter');
+    if (supplierSel) {
+        supplierSel.addEventListener('change', function(){
+            var params = new URLSearchParams(window.location.search);
+            if (this.value === '') {
+                params.delete('supplier_id');
+            } else {
+                params.set('supplier_id', this.value);
             }
             window.location.search = params.toString();
         });
