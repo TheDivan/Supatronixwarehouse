@@ -30,6 +30,20 @@ class Categories extends FSD_Controller {
         $this->load->view('master_template', array('content' => $this->load->view('categories/add', array(), TRUE)));
     }
 
+    public function delete($id = null) {
+        if (empty($this->is_admin)) show_error('Permission denied', 403);
+        if (!$id) show_404();
+        $cat = $this->Category_model->get($id);
+        if (!$cat) show_404();
+        if (!empty($cat['is_default'])) {
+            $this->session->set_flashdata('message', 'Default categories cannot be deleted');
+            redirect('categories');
+        }
+        $this->db->where('id', $id)->delete('stock_categories');
+        $this->session->set_flashdata('message', 'Category deleted');
+        redirect('categories');
+    }
+
     /**
      * Admin-only: reset categories to canonical list.
      */

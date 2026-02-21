@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Stock_model extends CI_Model {
     protected $table = 'stock';
+    // last insert/merge status for controller to inspect
+    public $last_was_merge = false;
+    public $last_delta = 0;
 
     public function __construct() {
         parent::__construct();
@@ -54,6 +57,24 @@ class Stock_model extends CI_Model {
                 $this->db->insert($this->table, $ins);
             }
         }
+        // Ensure useful columns exist for new features: device_model, supplier_id, created_by
+        if ($this->db->table_exists($this->table)) {
+            if (!$this->db->field_exists('device_model', $this->table)) {
+                @$this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `device_model` varchar(128) DEFAULT NULL");
+            }
+            if (!$this->db->field_exists('supplier_id', $this->table)) {
+                @$this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `supplier_id` int(10) DEFAULT NULL");
+            }
+            if (!$this->db->field_exists('created_by', $this->table)) {
+                @$this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `created_by` int(10) DEFAULT NULL");
+            }
+            if (!$this->db->field_exists('created_datetime', $this->table)) {
+                @$this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `created_datetime` datetime DEFAULT NULL");
+            }
+            if (!$this->db->field_exists('cost', $this->table)) {
+                @$this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `cost` decimal(10,2) DEFAULT NULL");
+            }
+        }
     }
 
     /**
@@ -94,25 +115,41 @@ class Stock_model extends CI_Model {
         $part_name = isset($data['part_name']) ? $data['part_name'] : null;
         $quantity = isset($data['quantity']) ? (int)$data['quantity'] : 0;
 
-        // If a matching item exists for the same office, category and part_name, merge quantities
-        if ($office_id && $category && $part_name) {
-            $existing = $this->db->where('office_id', $office_id)
-                                  ->where('part_category', $category)
-                                  ->where('part_name', $part_name)
-                                  ->get($this->table)->row_array();
-            if ($existing) {
-                // Update quantity and optional fields
-                $upd = array();
-                if ($quantity !== 0) {
-                    $this->db->set('quantity', 'quantity + ' . $quantity, FALSE);
-                }
-                if (isset($data['cost'])) $upd['cost'] = $data['cost'];
-                if (isset($data['supplier'])) $upd['supplier'] = $data['supplier'];
-                if (isset($data['notes'])) $upd['notes'] = $data['notes'];
-                $upd['updated_datetime'] = date('Y-m-d H:i:s');
-                if (!empty($upd)) $this->db->where('id', $existing['id'])->update($this->table, $upd);
-                return (int)$existing['id'];
+        // Ensure category is present and exists in categories table
+        if (!$category) return null;
+        $cat = $this->db->where('name', $category)->get('stock_categories')->row_array();
+        if (!$cat) {
+            // do not auto-create non-default categories here; require admin to add
+            return null;
+        }
+
+        // Reset merge flags
+        $this->last_was_merge = false;
+        $this->last_delta = 0;
+
+        // If a duplicate exists (same part_name + category + device_model + office_id [+ supplier_id if provided]), merge quantities
+        $dupQuery = $this->db->where('office_id', $office_id)
+                              ->where('part_category', $category)
+                              ->where('part_name', $part_name);
+        if (!empty($data['device_model'])) $dupQuery = $dupQuery->where('device_model', $data['device_model']);
+        if (!empty($data['supplier_id'])) $dupQuery = $dupQuery->where('supplier_id', $data['supplier_id']);
+        $existing = $dupQuery->get($this->table)->row_array();
+        if ($existing) {
+            // perform merge: increment quantity and update optional fields
+            $delta = (int)$quantity;
+            if ($delta !== 0) {
+                $this->db->set('quantity', 'quantity + ' . $delta, FALSE);
             }
+            $upd = array();
+            if (isset($data['cost'])) $upd['cost'] = $data['cost'];
+            if (isset($data['supplier'])) $upd['supplier'] = $data['supplier'];
+            if (isset($data['supplier_id']) && $this->db->field_exists('supplier_id', $this->table)) $upd['supplier_id'] = $data['supplier_id'];
+            if (isset($data['notes'])) $upd['notes'] = $data['notes'];
+            if (isset($data['device_model'])) $upd['device_model'] = $data['device_model'];
+            if (!empty($upd)) $this->db->where('id', $existing['id'])->update($this->table, $upd);
+            $this->last_was_merge = true;
+            $this->last_delta = $delta;
+            return (int)$existing['id'];
         }
 
         $data['created_datetime'] = date('Y-m-d H:i:s');

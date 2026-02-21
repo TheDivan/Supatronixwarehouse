@@ -4,7 +4,7 @@
     <form method="post" action="<?php echo site_url('stock/add'); ?>">
         <div class="form-group">
             <label>Category</label>
-            <select id="part_category" name="part_category" class="form-control">
+            <select id="part_category" name="part_category" class="form-control" required>
                 <option value="">-- select --</option>
                 <?php foreach(($categories ?? array()) as $c): ?>
                     <option value="<?php echo htmlspecialchars($c['name']); ?>"><?php echo htmlspecialchars($c['name']); ?></option>
@@ -22,13 +22,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Allocate To (Office)</label>
+            <label>Allocate To (Store Location)</label>
             <select name="office_id" class="form-control">
-                <?php if ($this->session->userdata('is_admin')): ?>
+                <?php if (!empty($store_locations) && is_array($store_locations)): ?>
+                    <?php foreach ($store_locations as $loc): ?>
+                        <?php if ($this->session->userdata('is_admin') || (int)$this->session->userdata('office_id') === (int)$loc['id']): ?>
+                            <option value="<?php echo (int)$loc['id']; ?>"><?php echo htmlspecialchars($loc['name']); ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
                     <option value="1">Walvis Bay</option>
                     <option value="2">Swakopmund</option>
-                <?php else: ?>
-                    <option value="<?php echo $this->session->userdata('office_id') ?: 1; ?>"><?php echo ($this->session->userdata('office_id')==2? 'Swakopmund':'Walvis Bay'); ?></option>
                 <?php endif; ?>
             </select>
         </div>
@@ -41,6 +45,10 @@
             <input id="part_name_custom" type="text" name="part_name_custom" class="form-control mt-1" placeholder="Custom part name (optional)" />
         </div>
         <div class="form-group">
+            <label>Device Model</label>
+            <input name="device_model" type="text" class="form-control" placeholder="e.g. Samsung Galaxy A53" required />
+        </div>
+        <div class="form-group">
             <label>Quantity</label>
             <input name="quantity" type="number" class="form-control" value="1" />
         </div>
@@ -50,8 +58,8 @@
         </div>
         <div class="form-group">
             <label>Supplier</label>
-            <select name="supplier_id" class="form-control">
-                <option value="">-- none --</option>
+            <select name="supplier_id" class="form-control" required>
+                <option value="">-- select supplier --</option>
                 <?php foreach(($suppliers ?? array()) as $sp): ?>
                     <option value="<?php echo $sp['id']; ?>"><?php echo htmlspecialchars($sp['name']); ?></option>
                 <?php endforeach; ?>

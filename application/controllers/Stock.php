@@ -9,12 +9,25 @@ class Stock extends FSD_Controller {
         $this->load->model('Api_token_model');
         $this->load->model('Supplier_model');
         $this->load->model('Category_model');
+        $this->load->model('Store_location_model');
     }
 
     // List stock items
     public function index() {
         $category = $this->input->get('category') ?: null;
-        $stocks = $this->Stock_model->get_all($this->office_id, $category);
+        // office filter: allow admin to view all, otherwise restrict to session office
+        $office_filter = $this->input->get('office_id');
+        if ($office_filter === null || $office_filter === '') {
+            // if not admin, default to user's office
+            if (empty($this->is_admin)) {
+                $office_filter = $this->office_id ?: 1;
+            } else {
+                $office_filter = null; // admin: show all by default
+            }
+        } else {
+            $office_filter = (int)$office_filter;
+        }
+        $stocks = $this->Stock_model->get_all($office_filter, $category);
         // load suppliers to map names -> ids
         $suppliers = $this->Supplier_model->get_all();
         $smap = array();
@@ -28,7 +41,13 @@ class Stock extends FSD_Controller {
         unset($st);
         $data['stocks'] = $stocks;
         $data['active_category'] = $category;
-        $data['office_names'] = array(1 => 'Walvis Bay', 2 => 'Swakopmund');
+        $data['active_office'] = $office_filter;
+        // use store_locations from store_locations table
+        $locations = $this->Store_location_model->get_all();
+        $locmap = array();
+        foreach ($locations as $loc) $locmap[$loc['id']] = $loc['name'];
+        $data['office_names'] = $locmap;
+        $data['suppliers'] = $suppliers;
         // Pass any post-save flashdata to the view so it can show a confirmation modal
         $data['saved'] = $this->session->flashdata('saved');
         $this->load->view('master_template', array('content' => $this->load->view('stock/index', $data, TRUE)));
@@ -75,6 +94,7 @@ class Stock extends FSD_Controller {
                 'office_id' => $office_id,
                 'part_category' => $post['part_category'] ?? null,
                 'part_name' => $post['part_name'] ?? null,
+                'device_model' => $post['device_model'] ?? null,
                 'quantity' => isset($post['quantity']) ? (int)$post['quantity'] : 0,
                 'cost' => isset($post['cost']) ? (float)$post['cost'] : null,
                 'supplier' => null,
@@ -88,7 +108,27 @@ class Stock extends FSD_Controller {
                 $sp = $this->Supplier_model->get($record['supplier_id']);
                 $record['supplier'] = $sp['name'] ?? null;
             }
+            // Server-side validation: ensure required fields present
+            if (empty($record['part_category']) || empty($record['part_name']) || empty($record['device_model']) || empty($record['supplier_id'])) {
+                $this->session->set_flashdata('message', 'Please provide Category, Part Name, Device Model and Supplier.');
+                redirect('stock/add');
+            }
+
+            // Insert or merge; Stock_model will set last_was_merge/last_delta when it merges
             $id = $this->Stock_model->insert($record);
+            if (!$id) {
+                $this->session->set_flashdata('message', 'Failed to add stock item — category may not exist. Contact admin.');
+                redirect('stock/add');
+            }
+            if ($id && !empty($this->Stock_model->last_was_merge)) {
+                // log the merged addition as a stock movement
+                $delta = (int)$this->Stock_model->last_delta;
+                if ($delta !== 0) {
+                    $this->Stock_movement_model->log($id, $office_id, $delta, 'Merged stock add', $this->employee_id);
+                }
+                $this->session->set_flashdata('saved', array('id'=>$id,'part_name'=>$record['part_name'],'merged'=>true,'delta'=>$delta));
+                redirect('stock');
+            }
             // Log initial stock movement (use the office actually assigned to the record)
             if ($id && isset($record['quantity']) && $record['quantity'] != 0) {
                 $this->Stock_movement_model->log($id, $office_id, (int)$record['quantity'], 'Initial stock', $this->employee_id);
@@ -100,10 +140,14 @@ class Stock extends FSD_Controller {
         // pass suppliers, categories and office names
         $suppliers = $this->Supplier_model->get_all();
         $categories = $this->Category_model->get_all();
+        $store_locations = $this->Store_location_model->get_all();
+        $locmap = array();
+        foreach ($store_locations as $l) $locmap[$l['id']] = $l['name'];
         $data = array(
             'suppliers'=>$suppliers,
             'categories'=>$categories,
-            'office_names'=>array(1=>'Walvis Bay',2=>'Swakopmund')
+            'store_locations'=>$store_locations,
+            'office_names' => $locmap
         );
         $this->load->view('master_template', array('content' => $this->load->view('stock/add', $data, TRUE)));
     }

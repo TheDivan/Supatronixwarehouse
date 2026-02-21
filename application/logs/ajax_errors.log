@@ -232,3 +232,25 @@ Stack trace:
 #6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('category_items', Array)
 #7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
 #8 {main}
+[2026-02-21 08:34:21] Uncaught mysqli_sql_exception: Unknown column 'distinct' in 'field list' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT `distinc...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT `distinc...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT `distinc...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT `distinc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(187): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->category_items()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('category_items', Array)
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#8 {main}
+[2026-02-21 08:34:22] Uncaught mysqli_sql_exception: Unknown column 'distinct' in 'field list' in C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php:305
+Stack trace:
+#0 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\drivers\mysqli\mysqli_driver.php(305): mysqli->query('SELECT `distinc...')
+#1 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(792): CI_DB_mysqli_driver->_execute('SELECT `distinc...')
+#2 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_driver.php(655): CI_DB_driver->simple_query('SELECT `distinc...')
+#3 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\database\DB_query_builder.php(1383): CI_DB_driver->query('SELECT `distinc...')
+#4 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\controllers\Stock.php(187): CI_DB_query_builder->get('stock')
+#5 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\application\core\FSD_Controller.php(41): Stock->category_items()
+#6 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\system\core\CodeIgniter.php(532): FSD_Controller->_remap('category_items', Array)
+#7 C:\Users\MCWalvis3\Downloads\exclusiverepairs-master\index.php(332): require_once('C:\\Users\\MCWalv...')
+#8 {main}

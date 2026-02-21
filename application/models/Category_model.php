@@ -9,19 +9,39 @@ class Category_model extends CI_Model {
         if (!$this->db->table_exists($this->table)) {
             $sql = "CREATE TABLE `stock_categories` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) DEFAULT NULL,
+  `name` varchar(128) NOT NULL,
+  `is_default` tinyint(1) DEFAULT 0,
   `sort_order` int(10) DEFAULT 0,
   `created_datetime` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_stock_categories_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
             log_message('info', 'Creating stock_categories table: ' . $sql);
             $this->db->query($sql);
             $err = $this->db->error();
             if (!empty($err['code'])) log_message('error', 'Failed creating stock_categories: ' . $err['message']);
         }
-        // Ensure sort_order column exists for ordering
+        // Ensure sort_order and is_default columns exist for ordering and defaults
         if (!$this->db->field_exists('sort_order', $this->table)) {
             $this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `sort_order` int(10) DEFAULT 0");
+        }
+        if (!$this->db->field_exists('is_default', $this->table)) {
+            $this->db->query("ALTER TABLE `{$this->table}` ADD COLUMN `is_default` tinyint(1) DEFAULT 0");
+        }
+        // Ensure unique index on name
+        $idx = $this->db->query("SHOW INDEX FROM `{$this->table}` WHERE Key_name='uq_stock_categories_name'")->result_array();
+        if (empty($idx)) {
+            // attempt to create unique index; ignore failures
+            @$this->db->query("ALTER TABLE `{$this->table}` ADD UNIQUE `uq_stock_categories_name` (`name`)");
+        }
+
+        // Seed canonical defaults if table empty
+        $count = $this->db->count_all_results($this->table);
+        if ($count === 0) {
+            $canon = array('Screen/LCD','Touch','Button','Sim Tray','Battery','Speaker','Charging Unit/Block','Software','Back Plate','Camera Glass');
+            foreach ($canon as $i => $name) {
+                $this->db->insert($this->table, array('name'=>$name,'is_default'=>1,'sort_order'=>$i,'created_datetime'=>date('Y-m-d H:i:s')));
+            }
         }
     }
 
@@ -45,15 +65,16 @@ class Category_model extends CI_Model {
         foreach ($canon_norm as $i => $name) {
             $row = $this->db->where('LOWER(name)=', strtolower($name))->get($this->table)->row_array();
             if ($row) {
-                $this->db->where('id', $row['id'])->update($this->table, array('name'=>$name,'sort_order'=>$i));
+                $this->db->where('id', $row['id'])->update($this->table, array('name'=>$name,'sort_order'=>$i,'is_default'=>1));
             } else {
-                $this->db->insert($this->table, array('name'=>$name,'sort_order'=>$i,'created_datetime'=>date('Y-m-d H:i:s')));
+                $this->db->insert($this->table, array('name'=>$name,'sort_order'=>$i,'is_default'=>1,'created_datetime'=>date('Y-m-d H:i:s')));
             }
         }
-        // delete any rows not in canonical (case-insensitive)
+        // delete any rows not in canonical (case-insensitive) and not defaults
         $inList = array_map(function($v){ return $this->db->escape(strtolower($v)); }, $canon_norm);
         $inClause = implode(',', $inList);
-        $this->db->query("DELETE FROM `{$this->table}` WHERE LOWER(name) NOT IN ($inClause)");
+        // Remove any non-default categories not in canonical list
+        $this->db->query("DELETE FROM `{$this->table}` WHERE LOWER(name) NOT IN ($inClause) AND is_default = 0");
         $this->db->trans_complete();
         return $this->db->trans_status();
     }
@@ -91,7 +112,7 @@ class Category_model extends CI_Model {
             }
         }
         $now = date('Y-m-d H:i:s');
-        $this->db->insert($this->table, array('name'=>$name,'created_datetime'=>$now));
+        $this->db->insert($this->table, array('name'=>$name,'is_default'=>0,'created_datetime'=>$now));
         return $this->db->insert_id();
     }
 

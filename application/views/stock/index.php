@@ -21,59 +21,64 @@
         <div class="col-md-4"><input id="stock-search" class="form-control" placeholder="Search stock..." /></div>
         <div class="col-md-3">
             <select id="office-filter" class="form-control">
-                <option value="">All offices</option>
-                <?php
-                    // Render office filter options server-side with friendly names and abbreviations
-                    $abbrev = array(1 => 'WB', 2 => 'SWK');
-                    foreach ($offmap as $oid => $count) {
-                        if ($oid === '' || $oid === null) continue;
-                        $name = isset($office_names[$oid]) ? $office_names[$oid] : ('Office ' . $oid);
-                        $abbr = isset($abbrev[$oid]) ? $abbrev[$oid] : '';
-                        $label = $name . ($abbr ? ' (' . $abbr . ')' : '') . ' (' . $count . ')';
-                        echo '<option value="' . $oid . '" data-name="' . htmlspecialchars($name) . '">' . htmlspecialchars($label) . '</option>';
-                    }
+                <option value="">All stores</option>
+                <?php if (!empty($office_names) && is_array($office_names)): foreach ($office_names as $id => $name):
+                    $sel = (!empty($active_office) && (int)$active_office === (int)$id) ? ' selected' : '';
                 ?>
+                    <option value="<?php echo (int)$id; ?>" data-name="<?php echo htmlspecialchars($name); ?>"<?php echo $sel; ?>><?php echo htmlspecialchars($name); ?></option>
+                <?php endforeach; endif; ?>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="supplier-filter" class="form-control">
+                <option value="">All suppliers</option>
+                <?php if (!empty($suppliers) && is_array($suppliers)): foreach ($suppliers as $sp): ?>
+                    <option value="<?php echo (int)$sp['id']; ?>"><?php echo htmlspecialchars($sp['name']); ?></option>
+                <?php endforeach; endif; ?>
             </select>
         </div>
     </div>
-    <table id="stock-table" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Office</th>
-                <th>Part</th>
-                <th>Qty</th>
-                <th>Cost</th>
-                <th>Supplier</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-            // build a small office index for client-side filtering
-            $offmap = array();
-            foreach ($stocks as $s) {
-                $oid = $s['office_id'] ?? 0;
-                $offmap[$oid] = isset($offmap[$oid]) ? $offmap[$oid] + 1 : 1;
-            }
-        ?>
-        
-        <?php foreach ($stocks as $s): ?>
-            <tr data-office="<?php echo $s['office_id'] ?? 0; ?>">
-                <td>
-                    <?php $cat = htmlspecialchars((string)($s['part_category'] ?? '')); ?>
-                    <a href="<?php echo site_url('stock?category=' . urlencode($s['part_category'])); ?>"><?php echo $cat; ?></a>
-                </td>
-                <td><?php echo htmlspecialchars((string)($office_names[$s['office_id'] ?? 0] ?? ('Office ' . ($s['office_id'] ?? 0)))); ?></td>
-                <td><?php echo htmlspecialchars((string)($s['part_name'] ?? '')); ?></td>
-                <td><?php echo (int)$s['quantity']; ?></td>
-                <td><?php echo isset($s['cost']) ? $s['cost'] : ''; ?></td>
-                <td><?php if (!empty($s['supplier_id'])) { ?><a href="<?php echo site_url('suppliers/edit/'.$s['supplier_id']); ?>"><?php echo htmlspecialchars((string)$s['supplier']); ?></a><?php } elseif (!empty($s['supplier'])) { echo htmlspecialchars((string)$s['supplier']); } else { echo ''; } ?></td>
-                <td><?php echo htmlspecialchars((string)($s['notes'] ?? '')); ?></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+
+    <?php
+        // Group stocks by category for display
+        $grouped = array();
+        foreach ($stocks as $s) {
+            $cat = $s['part_category'] ?? 'Uncategorized';
+            if (!isset($grouped[$cat])) $grouped[$cat] = array('rows'=>array(),'total_value'=>0,'total_qty'=>0);
+            $grouped[$cat]['rows'][] = $s;
+            $grouped[$cat]['total_value'] += ((float)($s['cost'] ?? 0)) * ((int)$s['quantity']);
+            $grouped[$cat]['total_qty'] += (int)$s['quantity'];
+        }
+    ?>
+
+    <?php foreach ($grouped as $category => $g): ?>
+        <div class="card mb-2">
+            <div class="card-header" style="cursor:pointer;" data-toggle="collapse" data-target="#cat-<?php echo md5($category); ?>">
+                <strong><?php echo htmlspecialchars($category); ?></strong>
+                <span style="float:right;">Total Qty: <?php echo (int)$g['total_qty']; ?> — Total Value: N$<?php echo number_format($g['total_value'],2); ?></span>
+            </div>
+            <div id="cat-<?php echo md5($category); ?>" class="collapse show">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr><th>Item Name</th><th>Device Model</th><th>Supplier</th><th>Store</th><th>Qty</th><th>Unit Price</th><th>Date Added</th></tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($g['rows'] as $s): ?>
+                        <tr data-office="<?php echo $s['office_id'] ?? 0; ?>" data-supplier="<?php echo $s['supplier_id'] ?? ''; ?>">
+                            <td><?php echo htmlspecialchars($s['part_name'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($s['device_model'] ?? ''); ?></td>
+                            <td><?php echo !empty($s['supplier'])?htmlspecialchars($s['supplier']):''; ?></td>
+                            <td><?php echo htmlspecialchars($office_names[$s['office_id'] ?? 0] ?? ''); ?></td>
+                            <td><?php $q=(int)($s['quantity']??0); if ($q < 3) echo '<span class="badge badge-danger">'.$q.'</span>'; else echo $q; ?></td>
+                            <td><?php echo isset($s['cost']) ? 'N$'.number_format($s['cost'],2) : ''; ?></td>
+                            <td><?php echo htmlspecialchars($s['created_datetime'] ?? ''); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>
     <?php if (!empty($saved)): ?>
             <div id="savedModal" class="modal" tabindex="-1" role="dialog">
@@ -115,18 +120,17 @@ document.addEventListener('DOMContentLoaded', function(){
     var table = jQuery('#stock-table').DataTable({
         pageLength: 25
     });
-    // populate office filter
+    // When office filter changes, reload page with office_id parameter
     var officeSel = document.getElementById('office-filter');
     if (officeSel) {
-        // Use the option's data-name attribute (friendly office name) for DataTables search
         officeSel.addEventListener('change', function(){
-            var val = this.value;
-            if (val === '') {
-                table.column(2).search('').draw();
+            var params = new URLSearchParams(window.location.search);
+            if (this.value === '') {
+                params.delete('office_id');
             } else {
-                var name = this.options[this.selectedIndex].getAttribute('data-name') || this.options[this.selectedIndex].text;
-                table.column(2).search('^' + jQuery.fn.dataTable.util.escapeRegex(name) + '$', true, false).draw();
+                params.set('office_id', this.value);
             }
+            window.location.search = params.toString();
         });
     }
     // wire up free-text search to DataTables search
