@@ -57,7 +57,11 @@
         <div class="card mb-2">
             <div class="card-header" style="cursor:pointer;" data-toggle="collapse" data-target="#cat-<?php echo md5($category); ?>">
                 <strong><?php echo htmlspecialchars($category); ?></strong>
-                <span style="float:right;">Total Qty: <?php echo (int)$g['total_qty']; ?> — Total Value: N$<?php echo number_format($g['total_value'],2); ?></span>
+                <span style="float:right;">
+                    <span style="background:#fff59d;color:#000;padding:4px 8px;border-radius:4px;font-weight:600;">
+                        Total Qty: <?php echo (int)$g['total_qty']; ?> — Total Value: N$<?php echo number_format($g['total_value'],2); ?>
+                    </span>
+                </span>
             </div>
             <div id="cat-<?php echo md5($category); ?>" class="collapse show">
                 <table class="table table-striped mb-0">
