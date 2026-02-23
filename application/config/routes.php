@@ -73,6 +73,16 @@ $route['suppliers/delete/(:num)'] = 'suppliers/delete/$1';
 // API endpoints
 $route['api/stock/adjust'] = 'stock/api_adjust';
 
+// Customer history route
+$route['customers/history/(:num)'] = 'customer/history/$1';
+
+// Job card printing routes
+$route['jobcard/print_view/(:num)'] = 'jobcard/print_view/$1';
+$route['jobcard/view/(:num)'] = 'jobcard/view/$1';
+$route['jobcard/create'] = 'jobcard/create';
+$route['jobcard/edit/(:num)'] = 'jobcard/edit/$1';
+$route['jobcard/delete/(:num)'] = 'jobcard/delete/$1';
+
 // API token management (admin)
 $route['api_tokens'] = 'api_tokens/index';
 $route['api_tokens/add'] = 'api_tokens/add';
@@ -81,5 +91,6 @@ $route['api_tokens/delete/(:num)'] = 'api_tokens/delete/$1';
 $route['api_tokens/regenerate/(:num)'] = 'api_tokens/regenerate/$1';
 
 $route['default_controller'] = 'welcome';
+$route['collections'] = 'collections/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

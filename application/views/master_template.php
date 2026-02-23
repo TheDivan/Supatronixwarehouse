@@ -79,14 +79,14 @@
             <li <?php echo($this->uri->segment(1) == 'customer'?'class="active"':''); ?>> <a href="<?php echo site_url('customer'); ?>"><i class="fa fa-users"></i><br>
               Customers</a> </li>
             
+            <li <?php echo($this->uri->segment(1) == 'collections'?'class="active"':''); ?>> <a href="<?php echo site_url('collections'); ?>"><i class="fa fa-file-text"></i><br>
+              Collections Report</a> </li>
+            
             <li <?php echo($this->uri->segment(1) == 'employee'?'class="active"':''); ?>> <a href="<?php echo site_url('employee'); ?>"><i class="fa fa-user-secret"></i><br>
               Employees</a> </li>
             
-            <li <?php echo($this->uri->segment(1) == 'brand'?'class="active"':''); ?>> <a href="<?php echo site_url('brand'); ?>"><i class="fa fa-cog"></i><br>
-              Brands</a> </li>
-
-            <li <?php echo($this->uri->segment(1) == 'model'?'class="active"':''); ?>> <a href="<?php echo site_url('model'); ?>"><i class="fa fa-cogs"></i><br>
-              Brand Models</a> </li>
+            <li <?php echo(in_array($this->uri->segment(1), array('devices','brand','model'))?'class="active"':''); ?>> <a href="<?php echo site_url('devices'); ?>"><i class="fa fa-mobile"></i><br>
+              Devices</a> </li>
 
             <li <?php echo($this->uri->segment(1) == 'email'?'class="active"':''); ?>> <a href="<?php echo site_url('email'); ?>"><i class="fa fa-envelope"></i><br>
               Email Templates</a> </li>
@@ -111,6 +111,9 @@
   </header>
   <!--Header [END]--> 
   <!--Content [Start]-->
+    <div class="container" style="margin-top:10px;">
+      <a href="#" id="global-back-btn" class="btn btn-default" style="display:none;"><i class="fa fa-arrow-left"></i> Back</a>
+    </div>
   <?php $this->load->view('errors/message'); ?>
   <?php
     // Controllers may pass either a rendered 'content' string or a 'template' view name.
@@ -161,5 +164,39 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.min.js"></script> 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/chosen.jquery.js"></script> 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/settings.js"></script>
+<script>
+;(function(){
+  var btn = document.getElementById('global-back-btn');
+  if(!btn) return;
+  function hasReferrerSameOrigin(){
+    try{
+      if(document.referrer){
+        var r = new URL(document.referrer);
+        return r.origin === location.origin;
+      }
+    }catch(e){ }
+    return false;
+  }
+
+  // Show the button when there is a meaningful back target
+  if(hasReferrerSameOrigin() || window.history.length > 1){
+    btn.style.display = '';
+  }
+
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    if(hasReferrerSameOrigin()){
+      window.location = document.referrer;
+      return;
+    }
+    if(window.history.length > 1){
+      window.history.back();
+      return;
+    }
+    // Fallback: go to home
+    window.location = '<?php echo site_url(); ?>';
+  }, false);
+})();
+</script>
 </body>
 </html>
