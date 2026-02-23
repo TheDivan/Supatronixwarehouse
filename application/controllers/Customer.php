@@ -43,6 +43,7 @@ class Customer extends FSD_Controller
  
             //add html for action
             $buttons = '<button class="btn btn-xs btn-primary" onclick="edit('."'".$customer->id."'".')"><i class="fa fa-pencil"></i> Edit</button>';
+            $buttons .= ' <a class="btn btn-xs btn-info" href="'.site_url('customers/history/'.$customer->id).'" title="History"><i class="fa fa-history"></i> History</a>';
             if($this->session->is_admin)
                 $buttons .= '<button class="btn btn-xs btn-danger" onclick="del('."'".$customer->id."'".')"><i class="fa fa-trash"></i> Delete</button>';
 
@@ -71,11 +72,29 @@ class Customer extends FSD_Controller
     {
         $this->_validate();
         $data = $this->input->post(NULL, TRUE);
-        $data['office_id'] = $this->session->employee_office_id;
+        $data['office_id'] = $this->session->office_id;
 		$data['updated_datetime'] = date("Y-m-d H:i:s");
 		$data['created_datetime'] = date("Y-m-d H:i:s");
         $insert = $this->customer_model->save($data);
-        echo json_encode(array("status" => TRUE));
+        echo json_encode(array("status" => TRUE, 'id' => $insert));
+    }
+
+    /**
+     * Show customer's job history
+     */
+    public function history($customer_id)
+    {
+        if (!is_numeric($customer_id)) show_404();
+        $this->load->model('job_model');
+        $jobs = $this->job_model->get_where(array('customer_id' => $customer_id));
+        // attach first device/fault for summary
+        foreach ($jobs as &$j) {
+            $items = $this->job_model->get_items($j['id']);
+            $j['first_device'] = isset($items[0]) ? $items[0]['device_number'] : '';
+            $j['first_fault'] = isset($items[0]) ? $items[0]['fault_discription'] : '';
+        }
+        $data = array('jobs' => $jobs, 'customer' => $this->customer_model->get_by_id($customer_id));
+        $this->load->view('master_template', array('content' => $this->load->view('customer/history', $data, TRUE)));
     }
  
     public function ajax_update()
